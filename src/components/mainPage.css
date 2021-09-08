@@ -1,0 +1,22 @@
+.Q-question{
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+    font-size: 21px;
+}
+
+
+.Q-next {
+    height: 73px;
+    text-align-last: center;
+    font-size: 46px;
+}
+
+.Q-main {
+    align-self: center;
+}
+
+.Q-next-butt {
+    font-size: 21px;
+    color: cornflowerblue;
+}

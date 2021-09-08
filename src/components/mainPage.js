@@ -2,6 +2,8 @@ import React,{Component} from "react"
 import data from "./data"
 import Data from "./data"
 
+import "./mainPage.css"
+
 class MainPage extends React.Component {    
     constructor(props) {
         super(props)
@@ -59,18 +61,40 @@ class MainPage extends React.Component {
             this.setState({current:this.toggle.answerCount})
         }
 
+        ///// alert if ans is not right ////
+        if(this.state.answer !== this.state.value) {
+            alert(`wrong! the correct answer is ${this.state.answer}`)
+        }
 
         this.setState({Data:filterr})
         // console.log(this.state.count,this.state.Data,this.state.value) 
     }
 
 
-    ////// this handler will extract value from options and set the correct answer from main data //////
+    ////// this handler will extract value from options and set the correct answer from main data and change colour based on right or wrong//////
     handleTarget(e) {
         let target = e.target.value
-        this.setState({value:target})
-        this.setState({answer:this.state.Data[0].ans})
+        this.state.value=target
+        this.state.answer=this.state.Data[0].ans
+        if(this.state.value === this.state.answer) {
+            e.target.style.color = "green"
+            setTimeout(() => {
+                e.target.style.color = "white"
+            }, 1000);
+                    
+                } else if(this.state.value !== this.state.answer) {
+                    e.target.style.color = "red"
+                    setTimeout(() => {
+                    e.target.style.color = "white"
+                    }, 2000);
+                }
+
     }
+
+    // handleTarget2(e) {
+    //     console.log(e)
+    //     
+    // }
 
     handleReset(e) {
         window.location.reload();
@@ -79,25 +103,27 @@ class MainPage extends React.Component {
     render() {
         console.log(this.state.value,this.state.answer,this.state.right,this.state.count)
         return(
-            <div>
+            <div className="Q-main" >
               {this.state.current===this.toggle.questions &&  
                 <div>
                     {this.state.Data.map((x,y) => {
                         return <div key={y}>
-                           <p> {x.question} </p>
+                           <p className="Q-question"  > {x.question} </p>
 
                            {x.options.map(z => {
                             //    console.log(z)
                                return <div>
-                                    <li>
-                                        <button value={z} onClick={this.handleTarget}>  {z} </button>   
+                                    <li >
+                                        <button style={{border:"none",backgroundColor:"blueviolet",fontSize:"21px",color:"white"}}  value={z} onClick={this.handleTarget}> {z} </button>   
                                     </li>
                                 </div>
                             })}
 
                         </div>
                     })}
-                    <button onClick={this.handleButton}>click</button>
+                    <div className="Q-next" >
+                        <button className="Q-next-butt" onClick={this.handleButton}>Next</button>
+                    </div>
                 </div>}
 
                 {this.state.current === this.toggle.answerCount&& <div>
